@@ -91,7 +91,13 @@ def make_graphs(option):
                     print(f"Skipping {file}: Not enough data points.")
                     continue
 
+
+
                 df["HPS"] = df["HPS"].astype(str).str.replace(",", "").astype(float)
+
+                if df["HPS"].mean() < 600000:
+                    print(f"Skipping {file}: Player is not a healer.")
+                    continue
 
                 x_axis = range(1, len(df) + 1)
                 parse_percent = df["Parse %"]
