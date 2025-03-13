@@ -1,6 +1,6 @@
 import pandas as pd
 import os
-import matplotlib.pyplot as plt 
+import matplotlib.pyplot as plt
 
 def make_graphs(option):
     if option == "damage":
@@ -13,7 +13,6 @@ def make_graphs(option):
                 file_path = os.path.join(player_path, file)
 
                 df = pd.read_csv(file_path)
-                
                 if "Name" not in df.columns or "Parse %" not in df.columns or "DPS" not in df.columns:
                     print(f"Skipping {file}: Missing required columns.")
                     continue
@@ -23,7 +22,6 @@ def make_graphs(option):
                 if len(df) < 2:
                     print(f"Skipping {file}: Not enough data points.")
                     continue
-                
                 #I want to add an if statement here to filter out low data points.
 
                 df["DPS"] = df["DPS"].astype(str).str.replace(",", "").astype(float)
@@ -57,9 +55,9 @@ def make_graphs(option):
                 plt.savefig(parse_graph_path, dpi=300)
                 plt.close()
                 print(f"Parse % and Ilvl graph saved: {parse_graph_path}")
-                
 
-                
+
+
                 plt.figure(figsize=(8, 5))
                 plt.plot(x_axis, dps_values, marker='s', linestyle='--', color='red', label="DPS")
                 plt.xlabel("Fight Number (Ordered)")
