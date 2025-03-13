@@ -56,9 +56,9 @@ def fill_damage_dict(): #Parses a directory of CSV files and seperates the entri
                 if not reader.fieldnames:
                     print(f"Skipping {csvfile} - no header")
                     continue
-                print(f"CSV Headers: {reader.fieldnames}")
+                #print(f"CSV Headers: {reader.fieldnames}")
                 for row in reader:
-                    print(f"Row Data: {row}")
+                    #print(f"Row Data: {row}")
                     name = row["Name"]
                     if not name:
                         print(f"Skipping row, missing 'Name': {row}")
