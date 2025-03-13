@@ -8,4 +8,6 @@ damage_path = r"C:\Parse-Graphs-From-CSVs\Damage CSVs"
 heal_path = r"C:\Parse-Graphs-From-CSVs\Healing CSVs" #These are the locations of the complete CSV files for a given stat.
 
 
+player_damage_path = r"C:\Parse-Graphs-From-CSVs\Player Damage CSVs"
+player_healing_path = r"C:\Parse-Graphs-From-CSVs\Player Healing CSVs" #Updated paths after the export to CSV function runs.
 

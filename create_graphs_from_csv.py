@@ -22,7 +22,7 @@ def make_graphs(option):
                 if len(df) < 2:
                     print(f"Skipping {file}: Not enough data points.")
                     continue
-                #I want to add an if statement here to filter out low data points.
+                #I *might* want to add an if statement here to filter out low data points.
 
                 df["DPS"] = df["DPS"].astype(str).str.replace(",", "").astype(float)
 

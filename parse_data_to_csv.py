@@ -4,12 +4,6 @@ from create_graphs_from_csv import *
 from variables import *
 
 
-
-player_damage_path = r"C:\Parse-Graphs-From-CSVs\Player Damage CSVs"
-player_healing_path = r"C:\Parse-Graphs-From-CSVs\Player Healing CSVs"
- #Player dictionary
-
-
 def export_to_csv(player_name, data_list, option): #Creates new CSV files with the player name as the title.
     try:
         if option == "damage":
