@@ -64,24 +64,29 @@ def process_player_entry(player):
     temp_ilvl_percent = 0
     temp_dps = 0
     temp_parse_percent = 0
-    print(player)
+    #print(player)
     if len(player) < 2:
         print(f"{player[0]['Name']} doesnt have enough parses.")
         return None
     if player[0]['Name'] == "Rolling Rubbish":
         return None
-    new_entry['Name'] = player[0]['Name']
+    
 
     for log in player:
         temp_parse_percent += int(log['Parse %'])
         temp_ilvl_percent += int(log['Ilvl %'])
         temp_dps += int((log['DPS'][:len(log['DPS'])-2]).replace(',',''))
-    temp_parse_percent = int(temp_parse_percent/len(player))
-    temp_ilvl_percent = int(temp_ilvl_percent/len(player))
-    temp_dps = int(temp_dps/len(player))
+    temp_parse_percent = str(int(temp_parse_percent/len(player)))
+    temp_ilvl_percent = str(int(temp_ilvl_percent/len(player)))
+    temp_dps = str(int(temp_dps/len(player)))
     new_entry['Parse %'] = temp_parse_percent
+    new_entry['Name'] = player[0]['Name']
+    new_entry['Amount'] = player[0]['Amount']
+    new_entry['Ilvl'] = player[len(player)-1]['Ilvl']
     new_entry['Ilvl %'] = temp_ilvl_percent
+    new_entry["Acitve"] = '90'
     new_entry['DPS'] = temp_dps
+    new_entry[''] = ''
     return new_entry
     
 
@@ -89,7 +94,7 @@ def average_player_dict():
     player_dict = parse_bad_logs("Damage")
     for player in player_dict:
         player_dict[player] = process_player_entry(player_dict[player])
-    print(player_dict)
+        print(player_dict[player])
 
 
 average_player_dict()
