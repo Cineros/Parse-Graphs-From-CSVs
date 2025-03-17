@@ -1,11 +1,12 @@
 import os
 import csv
-import pandas as pd
+#import pandas as pd #Im leaving this line here in case I better learn to use pandas.
 from variables import *
 export_dir = os.path.join(export_path, "Damage CSVs")
 
 
-def parse_bad_logs(option):
+def parse_bad_logs(option): #This function looks through a number of logs and adds a players log to a dict with their name as the key.
+    #Option is probably a bad var to use with how common I want to do both anyway. But if I need to seperate for any reason this will let me
     player_names = {}
     if option == "Damage":
         damage_dir = os.path.join(bad_logs_path, "Damage")
@@ -59,7 +60,7 @@ def parse_bad_logs(option):
             print("Finished averaging bad logs to dict.")
     return player_names
 
-def process_player_entry(player, option):
+def process_player_entry(player, option): #Here I take a given entry in the player dict and average the information I need and set a default for what I dont need. Then I reconstruct a entry using the new data and return that.
     if option == "Damage":
         new_entry = {}
         temp_ilvl_percent = 0
@@ -119,12 +120,30 @@ def process_player_entry(player, option):
 
     return new_entry
     
+def create_new_Log(player_dict, option): #The goal of this function is to write a new csv file with our new averaged data and export it to a location where it can be used in the other programs.
+    if option == "Damage":
+        pass
+    elif option == "Healing":
+        pass
+    else:
+        raise Exception ("Invaild option was given.")
 
 def average_player_dict():
+
     player_dict = parse_bad_logs("Damage")
     for player in player_dict:
         player_dict[player] = process_player_entry(player_dict[player], "Damage")
-        print(player_dict[player])
+        #print(player_dict[player])
+    create_new_Log(player_dict, "Damage")
+
+    player_dict.clear()
+
+    player_dict = parse_bad_logs("Healing")
+    for player in player_dict:
+        player_dict[player] = process_player_entry(player_dict[player], "Healing")
+        #print(player_dict[player])
+    create_new_Log(player_dict, "Healing")
+
 
 
 average_player_dict()

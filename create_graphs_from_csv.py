@@ -2,13 +2,13 @@ import pandas as pd
 import os
 import matplotlib.pyplot as plt
 
-def make_graphs(option):
+def make_graphs(option): #This function performs matplotlib magic to create graphs from various data sets.
     if option == "damage":
 
         player_path = r"C:\Parse-Graphs-From-CSVs\Player Damage CSVs"
         graph_dir = r"C:\Parse-Graphs-From-CSVs\DPS_Graphs"
         os.makedirs(graph_dir, exist_ok=True)
-        for file in os.listdir(player_path):
+        for file in os.listdir(player_path): #Essentially it iterates over all the player CSVs it created and makes a graph using the various data points in it.
             if file.endswith(".csv"):
                 file_path = os.path.join(player_path, file)
 
