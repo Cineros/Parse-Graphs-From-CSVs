@@ -71,11 +71,11 @@ def process_player_entry(player):
     if player[0]['Name'] == "Rolling Rubbish":
         return None
     
-
     for log in player:
         temp_parse_percent += int(log['Parse %'])
         temp_ilvl_percent += int(log['Ilvl %'])
         temp_dps += int((log['DPS'][:len(log['DPS'])-2]).replace(',',''))
+        
     temp_parse_percent = str(int(temp_parse_percent/len(player)))
     temp_ilvl_percent = str(int(temp_ilvl_percent/len(player)))
     temp_dps = str(int(temp_dps/len(player)))
@@ -87,6 +87,7 @@ def process_player_entry(player):
     new_entry["Acitve"] = '90'
     new_entry['DPS'] = temp_dps
     new_entry[''] = ''
+
     return new_entry
     
 
