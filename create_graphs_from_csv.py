@@ -38,7 +38,7 @@ def make_graphs(option): #This function performs matplotlib magic to create grap
 
 
                 fig, ax1 = plt.subplots(figsize=(8, 5))
-                ax1.set_xlabel("Fight Number (Ordered)")
+                ax1.set_xlabel("Week Number (Ordered)")
                 ax1.set_ylabel("Parse % / Ilvl % (0-100)", color="blue")
                 ax1.plot(x_axis, parse_percent, marker='o', linestyle="-", color="blue", label="Parse %")
                 ax1.plot(x_axis, ilvl_percent, marker='x', linestyle="--", color="green", label="Ilvl %")
@@ -60,7 +60,7 @@ def make_graphs(option): #This function performs matplotlib magic to create grap
 
                 plt.figure(figsize=(8, 5))
                 plt.plot(x_axis, dps_values, marker='s', linestyle='--', color='red', label="DPS")
-                plt.xlabel("Fight Number (Ordered)")
+                plt.xlabel("Week Number (Ordered)")
                 plt.ylabel("DPS")
                 plt.title(f"DPS Performance of {player_name}")
                 plt.legend()
@@ -108,7 +108,7 @@ def make_graphs(option): #This function performs matplotlib magic to create grap
                 os.makedirs(player_graph_dir, exist_ok=True)
 
                 fig, ax1 = plt.subplots(figsize=(8, 5))
-                ax1.set_xlabel("Fight Number (Ordered)")
+                ax1.set_xlabel("Week Number (Ordered)")
                 ax1.set_ylabel("Parse % / Ilvl % (0-100)", color="blue")
                 ax1.plot(x_axis, parse_percent, marker='o', linestyle="-", color="blue", label="Parse %")
                 ax1.plot(x_axis, ilvl_percent, marker='x', linestyle="--", color="green", label="Ilvl %")
@@ -128,7 +128,7 @@ def make_graphs(option): #This function performs matplotlib magic to create grap
 
                 plt.figure(figsize=(8, 5))
                 plt.plot(x_axis, hps_values, marker='s', linestyle='--', color='red', label="HPS")
-                plt.xlabel("Fight Number (Ordered)")
+                plt.xlabel("Week Number (Ordered)")
                 plt.ylabel("HPS")
                 plt.title(f"HPS Performance of {player_name}")
                 plt.legend()

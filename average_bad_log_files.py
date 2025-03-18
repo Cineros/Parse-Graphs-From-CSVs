@@ -96,6 +96,7 @@ def process_player_entry(player, option): #Here I take a given entry in the play
         temp_ilvl_percent = 0
         temp_parse_percent = 0
         temp_hps = 0
+        #temp_overheal = 0
         if len(player) < 2:
             print(f"{player[0]['Name']} doesnt have enough parses.")
             return None
@@ -105,13 +106,16 @@ def process_player_entry(player, option): #Here I take a given entry in the play
             temp_parse_percent += int(log['Parse %'])
             temp_ilvl_percent += int(log['Ilvl %'])
             temp_hps += int((log['HPS'][:len(log['HPS'])-2]).replace(',',''))
-            temp_parse_percent = str(int(temp_parse_percent/len(player)))
+            #temp_overheal += int((log['Overheal'][:len(log['Overheal'])-2]).replace('.',''))
 
+        temp_parse_percent = str(int(temp_parse_percent/len(player)))
         temp_ilvl_percent = str(int(temp_ilvl_percent/len(player)))
+        #temp_overheal = str(int(temp_overheal/len(player)))
         temp_hps = str(int(temp_hps/len(player)))
         new_entry['Parse %'] = f"{temp_parse_percent}"
         new_entry['Name'] = f"{player[0]['Name']}"
         new_entry['Amount'] = f"{player[0]['Amount']}"
+        new_entry['Overheal'] = f"0"
         new_entry['Ilvl'] = f"{player[len(player)-1]['Ilvl']}"
         new_entry['Ilvl %'] = f"{temp_ilvl_percent}"
         new_entry["Active"] = "90"
@@ -136,26 +140,44 @@ def create_new_Log(player_dict, option): #The goal of this function is to write 
                     writer.writerow(player_dict[item])
         print(f"CSV file: {new_csv} created.")
     elif option == "Healing":
-        pass
+        local_path = os.path.join(healing_csv_path) 
+        csv_name = input("Please enter the week of this log: ")
+        new_csv = os.path.join(local_path, f'{csv_name}.csv')
+        with open(new_csv, 'w', newline='', encoding='utf-8') as file:
+            write = csv.writer(file, quoting=csv.QUOTE_ALL)
+            writer = csv.DictWriter(file, fieldnames=healing_field_names, quoting=csv.QUOTE_ALL)
+            write.writerow(healing_field_names)
+            for item in player_dict:
+                #print(player_dict[item])
+                if player_dict[item] != None:
+                    writer.writerow(player_dict[item])
     else:
         raise Exception ("Invaild option was given.")
 
-def average_player_dict():
+def average_player_dict(option):
+    if option == "Damage":
+        player_dict = parse_bad_logs(option)
+        for player in player_dict:
+            player_dict[player] = process_player_entry(player_dict[player], option)
+            #print(player_dict[player])
+        create_new_Log(player_dict, option)
+    elif option == "Healing":
+        player_dict = parse_bad_logs(option)
+        for player in player_dict:
+            player_dict[player] = process_player_entry(player_dict[player], option)
+            #print(player_dict[player])
+        create_new_Log(player_dict, option)
 
-    player_dict = parse_bad_logs("Damage")
-    for player in player_dict:
-        player_dict[player] = process_player_entry(player_dict[player], "Damage")
-        #print(player_dict[player])
-    create_new_Log(player_dict, "Damage")
+def main():
+    option = input("What log type would you like to parse? Healing/Damage \n")
+    print(option)
+    if option != "Healing" and option != "Damage":
+        raise Exception ("That is not a valid option bailing out.")
+    if option == "Damage":
+        average_player_dict("Damage")
+    elif option == "Healing":
+        average_player_dict("Healing")
+    else:
+        print("Something went wrong!")
 
-    player_dict.clear()
-
-    #player_dict = parse_bad_logs("Healing")
-    #for player in player_dict:
-    #    player_dict[player] = process_player_entry(player_dict[player], "Healing")
-        #print(player_dict[player])
-    #create_new_Log(player_dict, "Healing")
-
-
-
-average_player_dict()
+main()
