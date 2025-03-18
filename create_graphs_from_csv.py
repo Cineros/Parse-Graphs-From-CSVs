@@ -193,9 +193,9 @@ def plot_guild_graph(option): #This was more of if I could and not if it would b
         plt.grid(True)
         graph_path = r"C:\Parse-Graphs-From-CSVs\Guild Graphs"
         os.makedirs(graph_path, exist_ok=True)
-        dps_graph_path = os.path.join(graph_path, "week_vs_dps.png")
+        dps_graph_path = os.path.join(graph_path, "guild_dps.png")
         plt.savefig(dps_graph_path, dpi=300, bbox_inches="tight")
-        plt.show()
+        #plt.show()
 
     elif option == "Healing":
         data_total = []
@@ -251,9 +251,9 @@ def plot_guild_graph(option): #This was more of if I could and not if it would b
         plt.grid(True)
         graph_path = r"C:\Parse-Graphs-From-CSVs\Guild Graphs"
         os.makedirs(graph_path, exist_ok=True)
-        dps_graph_path = os.path.join(graph_path, "week_vs_dps.png")
+        dps_graph_path = os.path.join(graph_path, "guild_hps.png")
         plt.savefig(dps_graph_path, dpi=300, bbox_inches="tight")
-        plt.show()
+        #plt.show()
     else:
         raise Exception ("Option is invaild bailing out. ")
 
