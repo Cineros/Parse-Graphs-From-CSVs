@@ -93,7 +93,7 @@ def make_graphs(option): #This function performs matplotlib magic to create grap
 
                 df["HPS"] = df["HPS"].astype(str).str.replace(",", "").astype(float)
 
-                if df["HPS"].mean() < 600000:
+                if df["HPS"].mean() < 700000:
                     print(f"Skipping {file}: Player is not a healer.")
                     continue
 
@@ -132,7 +132,7 @@ def make_graphs(option): #This function performs matplotlib magic to create grap
                 plt.ylabel("HPS")
                 plt.title(f"HPS Performance of {player_name}")
                 plt.legend()
-                dps_graph_path = os.path.join(player_graph_dir, f"{player_name}_dps.png")
+                dps_graph_path = os.path.join(player_graph_dir, f"{player_name}_hps.png")
                 plt.savefig(dps_graph_path, dpi=300)
                 plt.close()
                 print(f"HPS graph saved: {dps_graph_path}")
