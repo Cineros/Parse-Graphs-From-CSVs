@@ -180,4 +180,5 @@ def main():
     else:
         print("Something went wrong!")
 
-main()
+if __name__ == '__main__':
+    main()
