@@ -4,6 +4,8 @@ import csv
 from variables import *
 export_dir = os.path.join(export_path, "Damage CSVs")
 
+#Goals: Automate the CSV feeding and deleting process.
+
 
 def parse_bad_logs(option): #This function looks through a number of logs and adds a players log to a dict with their name as the key.
     #Option is probably a bad var to use with how common I want to do both anyway. But if I need to seperate for any reason this will let me
@@ -96,7 +98,7 @@ def process_player_entry(player, option): #Here I take a given entry in the play
         temp_ilvl_percent = 0
         temp_parse_percent = 0
         temp_hps = 0
-        #temp_overheal = 0
+        #temp_overheal = 0 #Overheal is a stat im not very sure if I care about. 
         if len(player) < 2:
             print(f"{player[0]['Name']} doesnt have enough parses.")
             return None
