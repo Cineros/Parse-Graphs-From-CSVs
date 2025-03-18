@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 import matplotlib.pyplot as plt
+from variables import *
 
 def make_graphs(option): #This function performs matplotlib magic to create graphs from various data sets.
     if option == "damage":
@@ -137,4 +138,122 @@ def make_graphs(option): #This function performs matplotlib magic to create grap
                 plt.close()
                 print(f"HPS graph saved: {dps_graph_path}")
 
+
+def plot_guild_graph(option): #This was more of if I could and not if it would be useful to know. Most of this I found online, I only changed it to fit this purpose. 
+    if option == "Damage":
+        data_total = []
+        graph_col = ["Parse %", "Name", "DPS", "Ilvl"]
+        week_num = 0
+        for file in os.listdir(damage_path):
+            file_path = os.path.join(damage_path, file)
+            if os.path.isdir(file_path) or not file.endswith(".csv"):
+                continue
+
+            week_num += 1
+            df = pd.read_csv(file_path)
+
+            if not all(col in df.columns for col in graph_col):
+                print(f"Skipping {file}: Missing required columns.")
+                continue
+            df["Week"] = week_num
+            data_total.append(df)
+
+        if not data_total:
+            print("No valid data found.")
+            return
+        
+        combined_df = pd.concat(data_total, ignore_index=True)
+        combined_df["DPS"] = combined_df["DPS"].astype(str).str.replace(",", "").astype(float)
+        combined_df["Ilvl"] = pd.to_numeric(combined_df["Ilvl"], errors="coerce")
+
+        player_counts = combined_df["Name"].value_counts()
+        valid_players = player_counts[player_counts > 1].index
+        combined_df = combined_df[combined_df["Name"].isin(valid_players)]
+
+
+
+        players = combined_df["Name"].unique()
+        colors = plt.cm.get_cmap("rainbow", len(players)) 
+
+
+        plt.figure(figsize=(18, len(df)))
+        for i, player in enumerate(players):
+            player_data = combined_df[combined_df["Name"] == player]
+            plt.plot(
+                player_data["Week"], 
+                player_data["DPS"], 
+                label=player, 
+                color=colors(i),  
+                marker="o", linestyle="-", linewidth=2.5, alpha=0.9
+        )
+        plt.xlabel("Week Number")
+        plt.ylabel("DPS")
+        plt.title("DPS Progression Over Weeks")
+        plt.legend(title="Players", bbox_to_anchor=(1.05, 1), loc='upper left')
+        plt.grid(True)
+        graph_path = r"C:\Parse-Graphs-From-CSVs\Guild Graphs"
+        os.makedirs(graph_path, exist_ok=True)
+        dps_graph_path = os.path.join(graph_path, "week_vs_dps.png")
+        plt.savefig(dps_graph_path, dpi=300, bbox_inches="tight")
+        plt.show()
+
+    elif option == "Healing":
+        data_total = []
+        graph_col = ["Parse %", "Name", "HPS", "Ilvl"]
+        week_num = 0
+        for file in os.listdir(heal_path):
+            file_path = os.path.join(heal_path, file)
+            if os.path.isdir(file_path) or not file.endswith(".csv"):
+                continue
+
+            week_num += 1
+            df = pd.read_csv(file_path)
+
+            if not all(col in df.columns for col in graph_col):
+                print(f"Skipping {file}: Missing required columns.")
+                continue
+            df["Week"] = week_num
+            data_total.append(df)
+
+        if not data_total:
+            print("No valid data found.")
+            return
+        
+        combined_df = pd.concat(data_total, ignore_index=True)
+        combined_df["HPS"] = combined_df["HPS"].astype(str).str.replace(",", "").astype(float)
+        combined_df["Ilvl"] = pd.to_numeric(combined_df["Ilvl"], errors="coerce")
+        combined_df = combined_df[(combined_df["HPS"] >= 300000)]
+
+        player_counts = combined_df["Name"].value_counts()
+        valid_players = player_counts[player_counts > 1].index
+        combined_df = combined_df[combined_df["Name"].isin(valid_players)]
+
+
+
+        players = combined_df["Name"].unique()
+        colors = plt.cm.get_cmap("rainbow", len(players)) 
+
+
+        plt.figure(figsize=(18, len(df)))
+        for i, player in enumerate(players):
+            player_data = combined_df[combined_df["Name"] == player]
+            plt.plot(
+                player_data["Week"], 
+                player_data["HPS"], 
+                label=player, 
+                color=colors(i),  
+                marker="o", linestyle="-", linewidth=2.5, alpha=0.9
+        )
+        plt.xlabel("Week Number")
+        plt.ylabel("HPS")
+        plt.title("HPS Progression Over Weeks")
+        plt.legend(title="Players", bbox_to_anchor=(1.05, 1), loc='upper left')
+        plt.grid(True)
+        graph_path = r"C:\Parse-Graphs-From-CSVs\Guild Graphs"
+        os.makedirs(graph_path, exist_ok=True)
+        dps_graph_path = os.path.join(graph_path, "week_vs_dps.png")
+        plt.savefig(dps_graph_path, dpi=300, bbox_inches="tight")
+        plt.show()
+    else:
+        raise Exception ("Option is invaild bailing out. ")
 

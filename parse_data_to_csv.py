@@ -99,16 +99,35 @@ def fill_healing_dict(): #Parses a directory of CSV files and seperates the entr
     return player_names
 
 def main():
-    damage_dict = fill_damage_dict()
-    for player in damage_dict:
-        #print(player, player_names[player])
-        export_to_csv(player, damage_dict[player], "damage")
-    make_graphs("damage")
-    healing_dict = fill_healing_dict()
-    for player in healing_dict:
-        #print(player, player_names[player])
-        export_to_csv(player, healing_dict[player], "healing")
-    make_graphs("healing")
+    valid_inputs = ["Damage Graphs", "Heal Graphs", "Guild Damage", "Guild Healing"]
+    while(True):
+        update = input("What would you like to update or generate? \n"
+        "Create DPS and Ilvl parse graphs: Damage Graphs \n"
+        "Create HPS and Ilvl parse graphs: Heal Graphs \n"
+        "Create Guild Damage Graph: Guild Damage \n"
+        "Create Guild Healing Graph: Guild Healing \n")
+        if update not in valid_inputs:
+            print("Sorry that input is not valid please try again")
+        else:
+            break
+    if update == "Damage Graphs":
+        damage_dict = fill_damage_dict()
+        for player in damage_dict:
+            #print(player, player_names[player])
+            export_to_csv(player, damage_dict[player], "damage")
+        make_graphs("damage")
+    elif update == "Heal Graphs":
+        healing_dict = fill_healing_dict()
+        for player in healing_dict:
+            #print(player, player_names[player])
+            export_to_csv(player, healing_dict[player], "healing")
+        make_graphs("healing")
+    elif update == "Guild Damage":
+        plot_guild_graph("Damage")
+    elif update == "Guild Healing":
+        plot_guild_graph("Healing")
+    else:
+        print("Something went wrong! Bailing out!")
 
 
 if __name__ == '__main__':
