@@ -12,6 +12,7 @@ def parse_bad_logs(option): #This function looks through a number of logs and ad
         damage_dir = os.path.join(bad_logs_path, "Damage")
 
         for file in os.listdir(damage_dir):
+            
             if file.endswith(".csv"):
                 file_path = os.path.join(damage_dir, file)
                 with open(file_path, newline='', encoding='utf-8') as csvfile:
@@ -81,13 +82,13 @@ def process_player_entry(player, option): #Here I take a given entry in the play
         temp_parse_percent = str(int(temp_parse_percent/len(player)))
         temp_ilvl_percent = str(int(temp_ilvl_percent/len(player)))
         temp_dps = str(int(temp_dps/len(player)))
-        new_entry['Parse %'] = temp_parse_percent
-        new_entry['Name'] = player[0]['Name']
-        new_entry['Amount'] = player[0]['Amount']
-        new_entry['Ilvl'] = player[len(player)-1]['Ilvl']
-        new_entry['Ilvl %'] = temp_ilvl_percent
-        new_entry["Acitve"] = '90'
-        new_entry['DPS'] = temp_dps
+        new_entry['Parse %'] = f"{temp_parse_percent}"
+        new_entry['Name'] = f"{player[0]['Name']}"
+        new_entry['Amount'] = f"{player[0]['Amount']}"
+        new_entry['Ilvl'] = f"{player[len(player)-1]['Ilvl']}"
+        new_entry['Ilvl %'] = f"{temp_ilvl_percent}"
+        new_entry["Active"] = "90"
+        new_entry['DPS'] = f"{temp_dps}"
         new_entry[''] = ''
 
     elif option == "Healing":
@@ -108,21 +109,32 @@ def process_player_entry(player, option): #Here I take a given entry in the play
 
         temp_ilvl_percent = str(int(temp_ilvl_percent/len(player)))
         temp_hps = str(int(temp_hps/len(player)))
-        new_entry['Parse %'] = temp_parse_percent
-        new_entry['Name'] = player[0]['Name']
-        new_entry['Amount'] = player[0]['Amount']
-        new_entry['Ilvl'] = player[len(player)-1]['Ilvl']
-        new_entry['Ilvl %'] = temp_ilvl_percent
-        new_entry["Acitve"] = '90'
-        new_entry['HPS'] = temp_hps
+        new_entry['Parse %'] = f"{temp_parse_percent}"
+        new_entry['Name'] = f"{player[0]['Name']}"
+        new_entry['Amount'] = f"{player[0]['Amount']}"
+        new_entry['Ilvl'] = f"{player[len(player)-1]['Ilvl']}"
+        new_entry['Ilvl %'] = f"{temp_ilvl_percent}"
+        new_entry["Active"] = "90"
+        new_entry['HPS'] = f"{temp_hps}"
         new_entry[''] = ''
 
-
+    #print(new_entry)
     return new_entry
     
 def create_new_Log(player_dict, option): #The goal of this function is to write a new csv file with our new averaged data and export it to a location where it can be used in the other programs.
     if option == "Damage":
-        pass
+        local_path = os.path.join(damage_csv_path) 
+        csv_name = input("Please enter the week of this log: ")
+        new_csv = os.path.join(local_path, f'{csv_name}.csv')
+        with open(new_csv, 'w', newline='', encoding='utf-8') as file:
+            write = csv.writer(file, quoting=csv.QUOTE_ALL)
+            writer = csv.DictWriter(file, fieldnames=damage_field_names, quoting=csv.QUOTE_ALL)
+            write.writerow(damage_field_names)
+            for item in player_dict:
+                #print(player_dict[item])
+                if player_dict[item] != None:
+                    writer.writerow(player_dict[item])
+        print(f"CSV file: {new_csv} created.")
     elif option == "Healing":
         pass
     else:
@@ -138,11 +150,11 @@ def average_player_dict():
 
     player_dict.clear()
 
-    player_dict = parse_bad_logs("Healing")
-    for player in player_dict:
-        player_dict[player] = process_player_entry(player_dict[player], "Healing")
+    #player_dict = parse_bad_logs("Healing")
+    #for player in player_dict:
+    #    player_dict[player] = process_player_entry(player_dict[player], "Healing")
         #print(player_dict[player])
-    create_new_Log(player_dict, "Healing")
+    #create_new_Log(player_dict, "Healing")
 
 
 
