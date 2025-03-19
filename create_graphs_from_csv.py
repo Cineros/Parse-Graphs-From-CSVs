@@ -136,7 +136,7 @@ def make_graphs(option): #This function performs matplotlib magic to create grap
                 hps_graph_path = os.path.join(player_graph_dir, f"{player_name}_hps.png")
                 plt.savefig(hps_graph_path, dpi=300)
                 plt.close()
-                print(f"HPS graph saved: {dps_graph_path}")
+                print(f"HPS graph saved: {hps_graph_path}")
 
 
 def plot_guild_graph(option): #This was more of if I could and not if it would be useful to know. Most of this I found online, I only changed it to fit this purpose. 
