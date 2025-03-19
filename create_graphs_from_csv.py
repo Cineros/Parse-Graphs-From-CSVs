@@ -133,8 +133,8 @@ def make_graphs(option): #This function performs matplotlib magic to create grap
                 plt.ylabel("HPS")
                 plt.title(f"HPS Performance of {player_name}")
                 plt.legend()
-                dps_graph_path = os.path.join(player_graph_dir, f"{player_name}_hps.png")
-                plt.savefig(dps_graph_path, dpi=300)
+                hps_graph_path = os.path.join(player_graph_dir, f"{player_name}_hps.png")
+                plt.savefig(hps_graph_path, dpi=300)
                 plt.close()
                 print(f"HPS graph saved: {dps_graph_path}")
 
@@ -173,8 +173,15 @@ def plot_guild_graph(option): #This was more of if I could and not if it would b
 
 
         players = combined_df["Name"].unique()
-        colors = plt.cm.get_cmap("rainbow", len(players)) 
 
+        color_palette = [
+            "#FF5733", "#33FF57", "#3357FF", "#FF33A1", "#FFD700", "#FF8C00", "#8A2BE2", "#00CED1",
+            "#DC143C", "#20B2AA", "#7B68EE", "#D2691E", "#32CD32", "#FF4500", "#4682B4", "#9932CC",
+            "#FFDAB9", "#708090", "#CD5C5C", "#2E8B57", "#BA55D3", "#00FA9A", "#FF1493", "#A52A2A",
+            "#1E90FF", "#ADFF2F", "#FF6347", "#8B0000", "#40E0D0", "#DAA520"
+        ]
+
+        colors = color_palette[:len(players)]
 
         plt.figure(figsize=(18, len(df)))
         for i, player in enumerate(players):
@@ -183,7 +190,7 @@ def plot_guild_graph(option): #This was more of if I could and not if it would b
                 player_data["Week"], 
                 player_data["DPS"], 
                 label=player, 
-                color=colors(i),  
+                color=colors[i],  
                 marker="o", linestyle="-", linewidth=2.5, alpha=0.9
         )
         plt.xlabel("Week Number")
@@ -222,7 +229,7 @@ def plot_guild_graph(option): #This was more of if I could and not if it would b
         combined_df = pd.concat(data_total, ignore_index=True)
         combined_df["HPS"] = combined_df["HPS"].astype(str).str.replace(",", "").astype(float)
         combined_df["Ilvl"] = pd.to_numeric(combined_df["Ilvl"], errors="coerce")
-        combined_df = combined_df[(combined_df["HPS"] >= 300000)]
+        combined_df = combined_df[(combined_df["HPS"] >= 500000)]
 
         player_counts = combined_df["Name"].value_counts()
         valid_players = player_counts[player_counts > 1].index
