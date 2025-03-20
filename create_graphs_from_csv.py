@@ -205,7 +205,7 @@ def plot_guild_graph(option): #This was more of if I could and not if it would b
                     ha="right", va="center",
                     bbox=dict(facecolor="none", edgecolor="none", alpha=1, boxstyle="round,pad=1.2")
                 )
-                
+
         plt.xlabel("Week Number")
         plt.ylabel("DPS")
         plt.title("DPS Progression Over Weeks")
