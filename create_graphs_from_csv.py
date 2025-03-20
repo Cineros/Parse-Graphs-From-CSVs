@@ -165,6 +165,7 @@ def plot_guild_graph(option): #This was more of if I could and not if it would b
         combined_df = pd.concat(data_total, ignore_index=True)
         combined_df["DPS"] = combined_df["DPS"].astype(str).str.replace(",", "").astype(float)
         combined_df["Ilvl"] = pd.to_numeric(combined_df["Ilvl"], errors="coerce")
+        
 
         player_counts = combined_df["Name"].value_counts()
         valid_players = player_counts[player_counts > 1].index
@@ -175,13 +176,14 @@ def plot_guild_graph(option): #This was more of if I could and not if it would b
         players = combined_df["Name"].unique()
 
         color_palette = [
-            "#FF5733", "#33FF57", "#3357FF", "#FF33A1", "#FFD700", "#FF8C00", "#8A2BE2", "#00CED1",
-            "#DC143C", "#20B2AA", "#7B68EE", "#D2691E", "#32CD32", "#FF4500", "#4682B4", "#9932CC",
-            "#FFDAB9", "#708090", "#CD5C5C", "#2E8B57", "#BA55D3", "#00FA9A", "#FF1493", "#A52A2A",
-            "#1E90FF", "#ADFF2F", "#FF6347", "#8B0000", "#40E0D0", "#DAA520"
+            "#025718", "#02e840", "#688038", "#d9f0aa", "#FFD700", "#000000", "#f7db05", "#665a03",
+            "#aba46f", "#d6610d", "#522403", "#2e1e13", "#b06b5b", "#fcc3b6", "#ff0000", "#690303",
+            "#e00d50", "#993655", "#610049", "#9f11f7", "#3d1754", "#c56dfc", "#4f00fa", "#cbb3ff",
+            "#0d15ff", "#020557", "#22244d", "#282829", "#40E0D0", "#DAA520"
         ]
 
         colors = color_palette[:len(players)]
+        plt.rcParams['axes.facecolor'] = '#818791'
 
         plt.figure(figsize=(18, len(df)))
         for i, player in enumerate(players):
@@ -193,6 +195,17 @@ def plot_guild_graph(option): #This was more of if I could and not if it would b
                 color=colors[i],  
                 marker="o", linestyle="-", linewidth=2.5, alpha=0.9
         )
+            if not player_data.empty:
+                first_week = player_data["Week"].min()
+                first_dps = player_data[player_data["Week"] == first_week]["DPS"].values[0]
+                
+                plt.text(
+                    first_week - 0.2, first_dps,
+                    player, fontsize=9, color=colors[i], weight="bold",
+                    ha="right", va="center",
+                    bbox=dict(facecolor="none", edgecolor="none", alpha=1, boxstyle="round,pad=1.2")
+                )
+                
         plt.xlabel("Week Number")
         plt.ylabel("DPS")
         plt.title("DPS Progression Over Weeks")
@@ -202,7 +215,7 @@ def plot_guild_graph(option): #This was more of if I could and not if it would b
         os.makedirs(graph_path, exist_ok=True)
         dps_graph_path = os.path.join(graph_path, "guild_dps.png")
         plt.savefig(dps_graph_path, dpi=300, bbox_inches="tight")
-        #plt.show()
+        plt.show()
 
     elif option == "Healing":
         data_total = []
