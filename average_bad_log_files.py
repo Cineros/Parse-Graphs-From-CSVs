@@ -75,8 +75,10 @@ def process_player_entry(player, option): #Here I take a given entry in the play
             return None
         if player[0]['Name'] == "Rolling Rubbish":
             return None
-        
+        if player[0]['Name'] == "Bear":
+            return None
         for log in player:
+            log['Parse %'].replace('*', '')
             temp_parse_percent += int(log['Parse %'])
             temp_ilvl_percent += int(log['Ilvl %'])
             temp_dps += int((log['DPS'][:len(log['DPS'])-2]).replace(',',''))
@@ -104,7 +106,9 @@ def process_player_entry(player, option): #Here I take a given entry in the play
             return None
         if player[0]['Name'] == "Rolling Rubbish":
             return None
+        
         for log in player:
+            log['Parse %'].replace('*', '')
             temp_parse_percent += int(log['Parse %'])
             temp_ilvl_percent += int(log['Ilvl %'])
             temp_hps += int((log['HPS'][:len(log['HPS'])-2]).replace(',',''))
