@@ -39,7 +39,7 @@ def update_graph(selected_value):
 def get_player_dataframes(option):
     if option == "Damage":
         total_player_data_damage = {} #moved to make local.
-        player_path = r"Parse-Graphs-From-CSVs\Player Damage CSVs"
+        player_path = r"Parse-Graphs-From-CSVs/Player Damage CSVs"
         for file in os.listdir(player_path): #Essentially it iterates over all the player CSVs it created and makes a graph using the various data points in it.
             if file.endswith(".csv"):
                 file_path = os.path.join(player_path, file)
@@ -68,7 +68,7 @@ def get_player_dataframes(option):
 
     elif option == "Healing":
         total_player_data_healing = {}
-        player_path = r"Parse-Graphs-From-CSVs\Player Healing CSVs"
+        player_path = r"Parse-Graphs-From-CSVs/Player Healing CSVs"
         for file in os.listdir(player_path): #Essentially it iterates over all the player CSVs it created and makes a graph using the various data points in it.
             if file.endswith(".csv"):
                 file_path = os.path.join(player_path, file)
