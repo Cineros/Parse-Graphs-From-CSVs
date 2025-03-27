@@ -5,6 +5,34 @@ import pandas as pd
 from dash import Dash, dcc, html, Input, Output
 from variables import color_palette
 
+app = Dash(__name__)
+server = app.server
+
+app.layout = html.Div([
+    html.H1("Player Performance Dashboard", style={'textAlign': 'center', 'color': 'white'}),
+    dcc.Dropdown(
+        id='graph-selector',
+        options=[
+            {'label': 'Damage', 'value': 'Damage'},
+            {'label': 'Healing', 'value': 'Healing'}
+        ],
+        value='Damage',  # default value
+        clearable=False,
+        style={'width': '200px', 'marginBottom': '20px'}
+    ),
+    dcc.Graph(id='graph-output')
+    
+], style={'minHeight': '100vh','backgroundColor': '#1c1f24','padding': '30px'})
+
+@app.callback(
+    Output('graph-output', 'figure'),
+    Input('graph-selector', 'value')
+)
+def update_graph(selected_value):
+    if selected_value == 'Damage':
+        return make_plots(get_player_dataframes("Damage"), "Damage")
+    else:
+        return make_plots(get_player_dataframes("Healing"), "Healing")
 
 
 
@@ -126,37 +154,8 @@ def make_plots(player_df_dict, option):
 
 #Todo: Implement Dash to turn plotly graphs into an application.
 
-app = Dash(__name__)
-
-app.layout = html.Div([
-    html.H1("Player Performance Dashboard", style={'textAlign': 'center', 'color': 'white'}),
-    dcc.Dropdown(
-        id='graph-selector',
-        options=[
-            {'label': 'Damage', 'value': 'Damage'},
-            {'label': 'Healing', 'value': 'Healing'}
-        ],
-        value='Damage',  # default value
-        clearable=False,
-        style={'width': '200px', 'marginBottom': '20px'}
-    ),
-    dcc.Graph(id='graph-output')
-    
-], style={'minHeight': '100vh','backgroundColor': '#1c1f24','padding': '30px'})
-
-@app.callback(
-    Output('graph-output', 'figure'),
-    Input('graph-selector', 'value')
-)
-def update_graph(selected_value):
-    if selected_value == 'Damage':
-        return make_plots(get_player_dataframes("Damage"), "Damage")
-    else:
-        return make_plots(get_player_dataframes("Healing"), "Healing")
-
-
 if __name__ == "__main__":
-    app.run(
+    app.run_server(
         debug=True,
         host="0.0.0.0",
         port=int(os.environ.get("PORT", 8050))  # use platform-assigned port
