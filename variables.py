@@ -17,7 +17,7 @@ healing_csv_path = r"C:\Parse-Graphs-From-CSVs\Healing CSVs"
 bad_logs_path = r"C:\Parse-Graphs-From-CSVs\Bad_Logs"
 export_path = r"C:\Parse-Graphs-From-CSVs"
 
-
+#A palette of colors used across multiple graphs in this program.
 color_palette = [
     "#025718", "#02e840", "#688038", "#d9f0aa", "#FFD700", "#000000", "#f7db05", "#665a03",
     "#aba46f", "#d6610d", "#522403", "#2e1e13", "#b06b5b", "#fcc3b6", "#ff0000", "#690303",
