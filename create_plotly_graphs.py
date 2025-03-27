@@ -40,6 +40,7 @@ def get_player_dataframes(option):
 
     elif option == "Healing":
         player_path = r"C:\Parse-Graphs-From-CSVs\Player Healing CSVs"
+        #Todo: Copy and reform DPS graphs to fit HPS data.
 
 
 
@@ -59,9 +60,9 @@ def make_plots(player_df_dict):
         fig.add_trace(go.Scatter(name=entry, y=df[Ilvl_Percent], legendgroup=entry, showlegend=False, line=dict(color=color_palette[color_ref])), row=2, col=1)
         fig.add_trace(go.Scatter(name=entry, y=df[Ilvl], legendgroup=entry, showlegend=False, line=dict(color=color_palette[color_ref])), row=2, col=2)
         color_ref += 1
-    
+
     fig.update_layout(legend_title_text='Players')
-    fig.update_layout(height=1300, width=2000)
+    fig.update_layout(height=1200, width=2000)
     fig.show()
 
 
