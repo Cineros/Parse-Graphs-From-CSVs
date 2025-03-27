@@ -52,8 +52,12 @@ def make_plots(player_df_dict):
     for entry in player_df_dict:
         df = player_df_dict[entry]
         #print(df[1])
-        fig.add_trace(go.Scatter(name=entry, y=df[Parse_percent], x=(y_axis)))
+        fig.add_trace(go.Scatter(name=entry, y=df[Parse_percent], x=(y_axis), legendgroup=entry), row=1, col=1)
+        fig.add_trace(go.Scatter(y=df[DPS], legendgroup=entry, showlegend=False), row=1, col=2)
+        fig.add_trace(go.Scatter(y=df[Ilvl_Percent], legendgroup=entry, showlegend=False), row=2, col=1)
+        fig.add_trace(go.Scatter(y=df[Ilvl], legendgroup=entry, showlegend=False), row=2, col=2)
     
+    fig.update_layout(legend_title_text='Players')
     fig.show()
 
 
