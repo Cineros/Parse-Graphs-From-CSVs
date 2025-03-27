@@ -1,19 +1,16 @@
-import plotly.express as px
+from plotly.subplots import make_subplots #Changing from plotly express to get better subplots.
+import plotly.graph_objects as go
 import os
 import pandas as pd
 from dash import Dash, dcc, html, Input, Output
 
 
-total_player_data_damage = {}
 
-def update_graph_data(option):
+
+def get_player_dataframes(option):
     if option == "Damage":
+        total_player_data_damage = {} #moved to make local.
         player_path = r"C:\Parse-Graphs-From-CSVs\Player Damage CSVs"
-        graph_dir = r"C:\Parse-Graphs-From-CSVs\DPS_Graphs"
-
-
-
-        os.makedirs(graph_dir, exist_ok=True)
         for file in os.listdir(player_path): #Essentially it iterates over all the player CSVs it created and makes a graph using the various data points in it.
             if file.endswith(".csv"):
                 file_path = os.path.join(player_path, file)
@@ -37,19 +34,37 @@ def update_graph_data(option):
                 dps_values = df["DPS"]
                 player_name = df["Name"].iloc[0]
                 total_player_data_damage[player_name] = [parse_percent, dps_values, ilvl_percent, ilvl_values]
-        #print(total_player_data_damage)
+        return(total_player_data_damage)
 
 
     elif option == "Healing":
         player_path = r"C:\Parse-Graphs-From-CSVs\Player Healing CSVs"
-        graph_dir = r"C:\Parse-Graphs-From-CSVs\HPS_Graphs"
 
 
 
+def make_plots():
+    fig = make_subplots(rows=2, cols=2, start_cell="bottom-left")
+    fig.add_trace(go.Scatter(x=[1, 2, 3], y=[4, 5, 6]),
+              row=1, col=1)
+
+    fig.add_trace(go.Scatter(x=[20, 30, 40], y=[50, 60, 70]),
+                row=1, col=2)
+
+    fig.add_trace(go.Scatter(x=[300, 400, 500], y=[600, 700, 800]),
+                row=2, col=1)
+
+    fig.add_trace(go.Scatter(x=[4000, 5000, 6000], y=[7000, 8000, 9000]),
+                row=2, col=2)
+
+    fig.show()
 
 
-update_graph_data("Damage")
+#get_player_dataframes("Damage")
 
+make_plots()
+
+#Todo: Implement Dash to turn plotly graphs into an application.
+'''
 app = Dash(__name__)
 
 app.layout = html.Div([
@@ -73,6 +88,6 @@ def update_line_chart(contents):
     fig = px.line(df[mask],
         x="year", y="lifeExp", color='country')
     return fig
+'''
 
-
-app.run(debug=True)
+#app.run(debug=True)
