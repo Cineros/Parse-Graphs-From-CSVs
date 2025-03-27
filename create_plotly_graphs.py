@@ -16,7 +16,7 @@ def get_player_dataframes(option):
                 file_path = os.path.join(player_path, file)
 
                 df = pd.read_csv(file_path)
-                print(df)
+                #print(df)
                 if "Name" not in df.columns or "Parse %" not in df.columns or "DPS" not in df.columns:
                     print(f"Skipping {file}: Missing required columns.")
                     continue
@@ -42,26 +42,24 @@ def get_player_dataframes(option):
 
 
 
-def make_plots():
-    fig = make_subplots(rows=2, cols=2, start_cell="bottom-left")
-    fig.add_trace(go.Scatter(x=[1, 2, 3], y=[4, 5, 6]),
-              row=1, col=1)
-
-    fig.add_trace(go.Scatter(x=[20, 30, 40], y=[50, 60, 70]),
-                row=1, col=2)
-
-    fig.add_trace(go.Scatter(x=[300, 400, 500], y=[600, 700, 800]),
-                row=2, col=1)
-
-    fig.add_trace(go.Scatter(x=[4000, 5000, 6000], y=[7000, 8000, 9000]),
-                row=2, col=2)
-
+def make_plots(player_df_dict):
+    Parse_percent = 0 #These are a terrible version of an alias
+    DPS = 1
+    Ilvl_Percent = 2
+    Ilvl = 3
+    y_axis = list(range(0,100))
+    fig = make_subplots(rows=2, cols=2, start_cell="bottom-left", subplot_titles=("Parse %","Damage Per Second","Ilvl %", "Ilvl"))
+    for entry in player_df_dict:
+        df = player_df_dict[entry]
+        #print(df[1])
+        fig.add_trace(go.Scatter(name=entry, y=df[Parse_percent], x=(y_axis)))
+    
     fig.show()
 
 
 #get_player_dataframes("Damage")
 
-make_plots()
+make_plots(get_player_dataframes("Damage"))
 
 #Todo: Implement Dash to turn plotly graphs into an application.
 '''
