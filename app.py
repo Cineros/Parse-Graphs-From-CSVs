@@ -38,6 +38,7 @@ def update_graph(selected_value):
 
 def get_player_dataframes(option):
     print("Current working directory:", os.getcwd())
+    print("Contents of working directory:", os.listdir())
     print("Available files/folders:")
     print(os.listdir("Parse-Graphs-From-CSVs"))
     if option == "Damage":
