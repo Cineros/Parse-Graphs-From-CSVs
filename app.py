@@ -11,7 +11,7 @@ from variables import color_palette
 def get_player_dataframes(option):
     if option == "Damage":
         total_player_data_damage = {} #moved to make local.
-        player_path = r"C:\Parse-Graphs-From-CSVs\Player Damage CSVs"
+        player_path = r"Parse-Graphs-From-CSVs\Player Damage CSVs"
         for file in os.listdir(player_path): #Essentially it iterates over all the player CSVs it created and makes a graph using the various data points in it.
             if file.endswith(".csv"):
                 file_path = os.path.join(player_path, file)
@@ -40,7 +40,7 @@ def get_player_dataframes(option):
 
     elif option == "Healing":
         total_player_data_healing = {}
-        player_path = r"C:\Parse-Graphs-From-CSVs\Player Healing CSVs"
+        player_path = r"Parse-Graphs-From-CSVs\Player Healing CSVs"
         for file in os.listdir(player_path): #Essentially it iterates over all the player CSVs it created and makes a graph using the various data points in it.
             if file.endswith(".csv"):
                 file_path = os.path.join(player_path, file)
@@ -154,4 +154,10 @@ def update_graph(selected_value):
     else:
         return make_plots(get_player_dataframes("Healing"), "Healing")
 
-app.run(debug=True)
+
+if __name__ == "__main__":
+    app.run_server(
+        debug=True,
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 8050))  # use platform-assigned port
+    )
