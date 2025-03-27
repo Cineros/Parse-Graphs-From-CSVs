@@ -19,8 +19,9 @@ export_path = r"C:\Parse-Graphs-From-CSVs"
 
 #A palette of colors used across multiple graphs in this program.
 color_palette = [
-    "#025718", "#02e840", "#688038", "#d9f0aa", "#FFD700", "#000000", "#f7db05", "#665a03",
-    "#aba46f", "#d6610d", "#522403", "#2e1e13", "#b06b5b", "#fcc3b6", "#ff0000", "#690303",
-    "#e00d50", "#993655", "#610049", "#9f11f7", "#3d1754", "#c56dfc", "#4f00fa", "#cbb3ff",
-    "#0d15ff", "#020557", "#22244d", "#282829", "#40E0D0", "#DAA520"
+    "#00FF00", "#FF4500", "#1E90FF", "#FFFF00", "#FF00FF", "#00FFFF",
+    "#FFA500",  "#ADFF2F", "#00CED1", "#FF6347", "#7CFC00", "#8A2BE2",
+    "#00BFFF", "#32CD32", "#FFD700", "#DC143C", "#40E0D0", "#8B0000",
+    "#6495ED", "#20B2AA", "#FF8C00", "#9ACD32", "#B22222", "#48D1CC",
+    "#7FFF00", "#4169E1", "#00FA9A", "#E6E600", "#6A5ACD", "#00FF7F"
 ]
