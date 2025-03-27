@@ -3,6 +3,7 @@ import plotly.graph_objects as go
 import os
 import pandas as pd
 from dash import Dash, dcc, html, Input, Output
+from variables import color_palette
 
 
 
@@ -48,16 +49,19 @@ def make_plots(player_df_dict):
     Ilvl_Percent = 2
     Ilvl = 3
     y_axis = list(range(0,100))
+    color_ref = 0
     fig = make_subplots(rows=2, cols=2, start_cell="bottom-left", subplot_titles=("Parse %","Damage Per Second","Ilvl %", "Ilvl"))
     for entry in player_df_dict:
         df = player_df_dict[entry]
         #print(df[1])
-        fig.add_trace(go.Scatter(name=entry, y=df[Parse_percent], x=(y_axis), legendgroup=entry), row=1, col=1)
-        fig.add_trace(go.Scatter(y=df[DPS], legendgroup=entry, showlegend=False), row=1, col=2)
-        fig.add_trace(go.Scatter(y=df[Ilvl_Percent], legendgroup=entry, showlegend=False), row=2, col=1)
-        fig.add_trace(go.Scatter(y=df[Ilvl], legendgroup=entry, showlegend=False), row=2, col=2)
+        fig.add_trace(go.Scatter(name=entry, y=df[Parse_percent], x=(y_axis), legendgroup=entry, line=dict(color=color_palette[color_ref])), row=1, col=1)
+        fig.add_trace(go.Scatter(y=df[DPS], legendgroup=entry, showlegend=False, line=dict(color=color_palette[color_ref])), row=1, col=2)
+        fig.add_trace(go.Scatter(y=df[Ilvl_Percent], legendgroup=entry, showlegend=False, line=dict(color=color_palette[color_ref])), row=2, col=1)
+        fig.add_trace(go.Scatter(y=df[Ilvl], legendgroup=entry, showlegend=False, line=dict(color=color_palette[color_ref])), row=2, col=2)
+        color_ref += 1
     
     fig.update_layout(legend_title_text='Players')
+    fig.update_layout(height=1300, width=2000)
     fig.show()
 
 
