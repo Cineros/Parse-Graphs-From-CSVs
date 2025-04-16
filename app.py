@@ -21,7 +21,6 @@ app.layout = html.Div([
         style={'width': '200px', 'marginBottom': '20px'}
     ),
     dcc.Graph(id='graph-output')
-    
 ], style={'minHeight': '100vh','backgroundColor': '#1c1f24','padding': '30px'})
 
 @app.callback(
@@ -156,8 +155,8 @@ def make_plots(player_df_dict, option):
 
 #make_plots(get_player_dataframes("Damage"))
 
-#Todo: Implement Dash to turn plotly graphs into an application.
-
+#Todo: Make the app generic and be able to upload data to create graphs unique to that upload.
+#This could be achieved by implmenting this whole project into the application. I would have to remove my current sample data and figure out how data uploading functions.
 if __name__ == "__main__":
     app.run_server(
         debug=True,
